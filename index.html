@@ -27,15 +27,38 @@
     <button onclick="generateLink()">生成新链接</button>
 
     <script>
+                // 设备检测函数
+        function getOS() {
+            const ua = navigator.userAgent;
+            if (/android/i.test(ua)) {
+                return 'android';
+            } else if (/ipad|iphone|ipod/i.test(ua)) {
+                return 'ios';
+            }
+            return 'other';
+        }
+        
         async function generateLink() {
-            try {                
+            try {      
+                                // 获取设备类型
+                const osType = getOS();
+                
+                // 设置协议前缀
+                let protocolPrefix = 'mobileportal://';
+                if (osType === 'android') {
+                    protocolPrefix = 'portal://';
+                } else if (osType === 'other') {
+                    console.warn('非移动设备，保持默认协议');
+                }
+                
                 // 2. 转换为JSON字符串并编码
                 const jsonString = '{"data":"https://a.fehorizon.com/portal/WP/WP1/NWP1005.html?_bids=WP+static&_PARAMSKEY=E187F4EA","extras":{"hideNavigation":false,"pullRefreshEnable":false,"pullRefreshCallBack":false,"setNavigationColor":"#FFFFFF","titleBarColor":16777215,"showOptionMenu":false,"showTitleBar":true,"titleColor":"#222222","title":"操作记录","setStateBarTextColor":"dark"}}'
                 const encodedParams = encodeURIComponent(jsonString);
                 
                 // 3. 拼接新链接
                 const link = document.getElementById('dynamicLink');
-                link.href = `mobileportal://?params=${encodedParams}`;
+                // link.href = `mobileportal://?params=${encodedParams}`;
+                link.href = `${protocolPrefix}?payload=${encodedParams}`;
                 
                 // 4. 显示生成结果
                 console.log('新链接:', link.href);
