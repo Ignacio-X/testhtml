@@ -61,7 +61,20 @@
                 // 3. 拼接新链接
                 const link = document.getElementById('dynamicLink');
                 // link.href = `mobileportal://?params=${encodedParams}`;
-                link.href = `${protocolPrefix}?payload=${encodedParams}`;
+
+                var openTime = +new Date();
+                window.location.href = `${protocolPrefix}?payload=${encodedParams}`;
+                var timer = setTimeout(function () {
+                    if ((new Date()) - openTime < 2200) {
+                        //加了200ms基准误差
+                        alert('没有安装i远东')
+                    }
+                    if ((new Date()) - openTime > 2200) {
+                        clearTimeout(timer);
+                    }
+                }, 2000);
+
+               // link.href = `${protocolPrefix}?payload=${encodedParams}`;
                 
                 // 4. 显示生成结果
                 console.log('新链接:', link.href);
