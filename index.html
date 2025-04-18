@@ -29,7 +29,7 @@
     <h1>打开第三方应用-员工服务</h1>
     <a href="mobileportal://?thirdAppModuleName=officeApp&childName=mh_yuangongfuwu">调用</a>
 
-    <h1>修改了检测应用是否安装</h1>
+    <h1>修改了检测应用是否安装1</h1>
 
     <script>
                 // 设备检测函数
@@ -69,7 +69,7 @@
                 var timer = setTimeout(function () {
                     if ((new Date()) - openTime < 2200) {
                         //加了200ms基准误差
-                        alert('没有安装i远东')
+                        window.location.href = 'https://a.fehorizon.com';
                     }
                     if ((new Date()) - openTime > 2200) {
                         clearTimeout(timer);
