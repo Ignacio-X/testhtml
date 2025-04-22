@@ -29,7 +29,9 @@
     <h1>打开第三方应用-员工服务</h1>
     <a href="mobileportal://?thirdAppModuleName=officeApp&childName=mh_yuangongfuwu">调用</a>
 
-    <h2 id='testh'>修改了检测应用是否安装5</h2>
+    <h1>打开i远东中间页</h2>
+    <a id="urlLink" href="mobileportal://">跳转链接</a>
+    <button onclick="urlLink()">生成新链接</button>
 
     <script>
                 // 设备检测函数
@@ -41,6 +43,38 @@
                 return 'ios';
             }
             return 'other';
+        }
+
+         async function urlLink() {
+            try {      
+                                // 获取设备类型
+                const osType = getOS();
+                
+                // 设置协议前缀
+                let protocolPrefix = 'mobileportal://';
+                if (osType === 'android') {
+                    protocolPrefix = 'portal://';
+                } else if (osType === 'other') {
+                    console.warn('非移动设备，保持默认协议');
+                }
+                
+                // 2. 转换为JSON字符串并编码
+                const jsonString = '{"data":"https://a.fehorizon.com/portal/WP/WP1/NWP1005.html?_bids=WP+static&_PARAMSKEY=E187F4EA","extras":{"hideNavigation":false,"pullRefreshEnable":false,"pullRefreshCallBack":false,"setNavigationColor":"#FFFFFF","titleBarColor":16777215,"showOptionMenu":false,"showTitleBar":true,"titleColor":"#222222","title":"操作记录","setStateBarTextColor":"dark"}}'
+                const encodedParams = encodeURIComponent(jsonString);
+                
+                // 3. 拼接新链接
+                const link = document.getElementById('urlLink');
+                // link.href = `mobileportal://?params=${encodedParams}`;
+
+                link.href = `${protocolPrefix}?url=https://a.fehorizon.com/portal/HP/HP0/MHP0017.html?_bids=HP+static&params=${encodedParams}`;
+                
+                // 4. 显示生成结果
+                console.log('新链接:', link.href);
+                alert('链接已更新，点击跳转链接测试:',link.href);
+            } catch (error) {
+                console.error('生成失败:', error);
+                alert('数据获取失败，请检查网络连接');
+            }
         }
         
         async function generateLink() {
